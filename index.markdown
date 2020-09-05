@@ -159,7 +159,6 @@ permalink: /
             You need to know, it sounds naive, if I say I know all the languages above, I stick to the official documentation of all the languages above.
         </p>
     </div>
-    
     <h1>Am I using a framework?</h1>
     <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slider>
         <p>Yes, I can use several frameworks like the following:</p>
@@ -197,43 +196,42 @@ permalink: /
     </div>
 </div>
 <!-- End Component last -->
-
 <hr class="uk-divider-icon">
 <footer class="uk-child-width-1-1@s" uk-grid>
     <div class="uk-light uk-padding-small uk-panel">
         <div class="uk-child-width-1-3@s uk-grid-match" uk-grid uk-grid uk-scrollspy="cls: uk-animation-fade; target: .uk-card; delay: 500; repeat: true">
-        <div>
-            <div class="uk-card uk-card-large uk-card-hover">
-                <div class="uk-card-body">
-                    <h3 class="uk-card-title">Address</h3>
-                    <p>
-                        Jl. Karang Jati RT.07 RW.02 Kec.Margasari Kab.Tegal 52463
-                    </p>
+            <div>
+                <div class="uk-card uk-card-large uk-card-hover">
+                    <div class="uk-card-body">
+                        <h3 class="uk-card-title">Address</h3>
+                        <p>
+                            Jl. Karang Jati RT.07 RW.02 Kec.Margasari Kab.Tegal 52463
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="uk-card uk-card-large uk-card-hover">
+                    <div class="uk-card-body">
+                        <h3 class="uk-card-title">About Me at a Glance</h3>
+                        <p>
+                            I am just someone who was educated only up to junior high school, my english is bad, I only use google translation help.  I thank the google translation.  but I really like the world of technology.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="uk-card uk-card-large uk-card-hover">
+                    <div class="uk-card-body">
+                        <h3 class="uk-card-title">What helps me?</h3>
+                        <p>
+                            Thank you for all the free tools for me to use to build this web portfolio.<br/><br/>
+                            <a href="{{ site.url }}/tools" class="uk-button uk-button-primary">Check My Tools</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div>
-            <div class="uk-card uk-card-large uk-card-hover">
-                <div class="uk-card-body">
-                    <h3 class="uk-card-title">About Me at a Glance</h3>
-                    <p>
-                        I am just someone who was educated only up to junior high school, my english is bad, I only use google translation help.  I thank the google translation.  but I really like the world of technology.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="uk-card uk-card-large uk-card-hover">
-                <div class="uk-card-body">
-                    <h3 class="uk-card-title">What helps me?</h3>
-                    <p>
-                        Thank you for all the free tools for me to use to build this web portfolio.<br/><br/>
-                        <a href="{{ site.url }}/tools" class="uk-button uk-button-primary">Check My Tools</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
         <p class="uk-text-center">&copy; Wadahkode 2020</p>
     </div>
 </footer>
