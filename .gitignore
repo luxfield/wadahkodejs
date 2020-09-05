@@ -1,0 +1,14 @@
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+Gemfile.lock
+#_layouts
+#_posts
+#_includes
+node_modules
+yarn.lock
+yarn-error.log
+#vendor
+#assets
+#app

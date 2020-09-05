@@ -1,0 +1,37 @@
+$accordion-icon-color: none;
+
+$global-link-color: #DA7D02;
+$inverse-global-color-mode: none;
+// Card
+$card-primary-color-mode: none;
+$card-secondary-color-mode: none;
+
+// Navbar
+$navbar-color-mode: none;
+
+// Off-canvas
+$offcanvas-bar-color-mode: none;
+
+// Overlay
+$overlay-primary-color-mode: none;
+
+// Section
+$section-primary-color-mode: none;
+$section-secondary-color-mode: none;
+
+// Tile
+$tile-primary-color-mode: none;
+$tile-secondary-color-mode: none;
+
+@import "node_modules/uikit/src/scss/theme/accordion.scss";
+@import "node_modules/uikit/src/scss/theme/alert.scss";
+@import "node_modules/uikit/src/scss/theme/align.scss";
+@import "node_modules/uikit/src/scss/variables.scss";
+@import "node_modules/uikit/src/scss/mixins.scss";
+@import "node_modules/uikit/src/scss/uikit-theme.scss";
+@import "node_modules/uikit/src/scss/uikit.scss";
+//@import "node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss";
+
+.uk-text-light {
+    color: #fefefe;
+}

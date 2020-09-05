@@ -1,0 +1,17 @@
+{
+  "name": "portofolio",
+  "version": "1.0.0",
+  "description": "My Portofolio",
+  "main": "index.js",
+  "dependencies": {
+    "uikit": "^3.5.7"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "wadahkode <mvp.dedefilaras@gmail.com>",
+  "license": "MIT"
+}
