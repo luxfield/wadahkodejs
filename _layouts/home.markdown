@@ -11,69 +11,68 @@
 </head>
 <body>
     {% if page.permalink == "/" %}
-    <div class="uk-position-relative">
-        <div class="uk-position-top">
-            <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
-                <div class="uk-navbar-left">
-                    <a href="{{ site.url }}" class="uk-navbar-item uk-logo">{{ page.title }}</a>
+        <div class="uk-position-relative">
+            <div class="uk-position-top">
+                <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
+                    <div class="uk-navbar-left">
+                        <a href="{{ site.url }}" class="uk-navbar-item uk-logo">{{ page.title }}</a>
+                    </div>
+                    <div class="uk-navbar-right">
+                        <ul class="uk-navbar-nav">
+                            <li class="uk-active">
+                                <a href="{{ site.url }}/index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="{{ site.url }}/about.html">About me</a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="uk-height-large uk-background-cover uk-light uk-flex" uk-parallax="bgx: 100; bgy: -300" style="background-image: url('assets/images/illustration-business-people-avatar/43638.jpg')">
+                <div class="uk-width-1-2@m @uk-text-center uk-margin-top uk-margin-auto-vertical uk-padding uk-padding-small">
+                    <h1 class="">Welcome Friends</h1>
+                    <p class="uk-text-lead">You're looking at my very simple portfolio.</p>
                 </div>
-                <div class="uk-navbar-right">
-                    <ul class="uk-navbar-nav">
-                        <li class="uk-active">
-                            <a href="{{ site.url }}/index.html">Home</a>
-                        </li>
-                        <li>
-                            <a href="{{ site.url }}/about.html">About me</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-        
-        <div class="uk-height-large uk-background-cover uk-light uk-flex" uk-parallax="bgx: 100; bgy: -300" style="background-image: url('assets/images/illustration-business-people-avatar/43638.jpg')">
-            <div class="uk-width-1-2@m @uk-text-center uk-margin-top uk-margin-auto-vertical uk-padding uk-padding-small">
-                <h1 class="">Welcome Friends</h1>
-                <p class="uk-text-lead">You're looking at my very simple portfolio.</p>
             </div>
         </div>
-    </div>
     {% endif %}
     
     {% if page.permalink == "/tools" %}
-    <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
-        <div class="uk-navbar-left">
-            <a href="{{ site.url }}" class="uk-navbar-item uk-logo">{{ page.title }}</a>
-        </div>
-        <div class="uk-navbar-right">
-            <ul class="uk-navbar-nav">
-                <li class="uk-active">
-                    <a href="{{ site.url }}/index.html">Home</a>
-                </li>
-                <li>
-                    <a href="{{ site.url }}/about.html">About me</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    {% include credit.md %}
+        <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
+            <div class="uk-navbar-left">
+                <a href="{{ site.url }}" class="uk-navbar-item uk-logo">{{ page.title }}</a>
+            </div>
+            <div class="uk-navbar-right">
+                <ul class="uk-navbar-nav">
+                    <li class="uk-active">
+                        <a href="{{ site.url }}/index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="{{ site.url }}/about.html">About me</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div>{% include credit.md %}</div>
     {% endif %}
     
     {% if page.permalink == "/about.html" %}
-    <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
-        <div class="uk-navbar-left">
-            <a href="{{ site.url }}" class="uk-navbar-item uk-logo">{{ page.title }}</a>
-        </div>
-        <div class="uk-navbar-right">
-            <ul class="uk-navbar-nav">
-                <li class="uk-active">
-                    <a href="{{ site.url }}/index.html">Home</a>
-                </li>
-                <li>
-                    <a href="{{ site.url }}/about.html">About me</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+        <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
+            <div class="uk-navbar-left">
+                <a href="{{ site.url }}" class="uk-navbar-item uk-logo">{{ page.title }}</a>
+            </div>
+            <div class="uk-navbar-right">
+                <ul class="uk-navbar-nav">
+                    <li class="uk-active">
+                        <a href="{{ site.url }}/index.html">Home</a>
+                    </li>
+                    <li>
+                        <a href="{{ site.url }}/about.html">About me</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     {% endif %}
     
     {{ content }}
