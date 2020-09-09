@@ -60,3 +60,11 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+exclude:
+    - app
+    - public
+    - database.rules.json
+    - firebase.json
+    - site.scss
+    - yarn.lock
+    - webpack.config.js

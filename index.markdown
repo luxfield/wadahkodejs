@@ -75,11 +75,11 @@ permalink: /
         <p>
             If you want to consult with me, please use one of the available facilities.
         </p>
-        <a href="mailto:ayus.sahabat@gmail.com" class="uk-button uk-button-default">
+        <a href="mailto:ayus.sahabat@gmail.com" class="uk-button uk-button-default" target="_blank">
             <span uk-icon="icon: mail;"></span>
             Email
         </a>
-        <a href="https://api.whatsapp.com/send?phone=+628979320749" class="uk-button uk-button-default">
+        <a href="https://api.whatsapp.com/send?phone=+628979320749" class="uk-button uk-button-default" target="_blank">
             <span uk-icon="icon: whatsapp;"></span>
             Whatsapp
         </a>
