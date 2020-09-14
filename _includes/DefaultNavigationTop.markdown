@@ -1,7 +1,7 @@
 
 
 <div class="uk-position-relative uk-position-z-index uk-height-small">
-    <div class="uk-position-fixed uk-width-1-1">
+    <div id="homeNavbar" class="uk-position-fixed uk-width-1-1">
         <nav class="uk-navbar-container uk-navbar-transparent uk-background-muted uk-box-shadow-medium" uk-navbar>
             <div class="uk-navbar-left">
                 <!--a href="#" class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: #offcanvas-push"></a-->

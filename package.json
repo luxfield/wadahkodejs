@@ -7,9 +7,16 @@
     "uikit": "^3.5.7"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.14.0"
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "firebase": "^7.20.0",
+    "webpack": "^4.44.1",
+    "workbox-webpack-plugin": "^5.1.4"
   },
   "scripts": {
+    "serve": "bundle exec jekyll serve",
+    "build": "bundle exec jekyll build",
+    "start": "webpack --watch",
+    "buildjs": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "wadahkode <mvp.dedefilaras@gmail.com>",

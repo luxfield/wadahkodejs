@@ -30,7 +30,7 @@ description: My Portofolio
                 </label>
             </div>
             <div class="uk-margin">
-                <button type="button" class="uk-button uk-button-primary uk-button-medium uk-width-1-1 form-register">
+                <button type="button" class="uk-button uk-button-primary uk-button-medium uk-width-1-1 quick-btn-register">
                       Register
                 </button>
             </div>

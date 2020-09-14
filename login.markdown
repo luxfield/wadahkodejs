@@ -11,17 +11,17 @@ description: My Portofolio
         <p>Please log in to continue to the main page, or if you don't have an account, you can create an account first.</p>
     </div>
     <div class="uk-card uk-width-1-1 uk-width-1-2@m uk-card-body uk-padding-small">
-        <form id="form-login">
+        <form id="form-login" method="POST">
             <div class="uk-margin">
                 <div class="uk-inline">
                     <span class="uk-form-icon" uk-icon="icon: mail;"></span>
-                    <input type="email" class="uk-input uk-form-width-large uk-form-medium" id="email" placeholder="Enter your email" required>
+                    <input type="email" class="uk-input uk-form-width-large uk-form-medium" id="email" placeholder="Enter your email">
                 </div>
             </div>
             <div class="uk-margin">
                 <div class="uk-inline">
                     <span class="uk-form-icon" uk-icon="icon: lock;"></span>
-                    <input type="password" class="uk-input uk-form-width-large uk-form-medium" id="password" placeholder="Password" required>
+                    <input type="password" class="uk-input uk-form-width-large uk-form-medium" id="password" placeholder="Password">
                 </div>
             </div>
             <div class="uk-margin">
@@ -30,7 +30,7 @@ description: My Portofolio
                 </label>
             </div>
             <div class="uk-margin">
-                <button type="button" class="uk-button uk-button-primary uk-button-medium uk-width-1-1 form-login">
+                <button type="button" class="uk-button uk-button-primary uk-button-medium uk-width-1-1 quick-btn-login">
                       Login
                 </button>
             </div>

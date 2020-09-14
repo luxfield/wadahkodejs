@@ -23,7 +23,8 @@ email: mvp.dedefilaras@gmail.com
 description: My portofolio
 
 # the subpath of your site, e.g. /blog
-url: "https://wadahkode.github.io/portofolio" # the base hostname & protocol for your site, e.g. http://example.com
+#url: "https://wadahkode.github.io/portofolio" # the base hostname & protocol for your site, e.g. http://example.com
+url: ""
 #twitter_username: jekyllrb
 github_username:  wadahkode
 source              : .
@@ -68,3 +69,4 @@ exclude:
     - site.scss
     - yarn.lock
     - webpack.config.js
+    - www

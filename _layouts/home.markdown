@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ site.url }}/vendor/fontawesome/css/all.min.css">
     <link rel="shortcut icon" href="{{ site.url }}/favicon.jpg" type="image/x-icon" />
 </head>
-<body>
+<body id="App">
     <div class="uk-position-relative uk-position-z-index">
         <div id="homeNavbar" class="uk-position-top">
             <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
@@ -55,8 +55,8 @@
     </div>
     
     {{ content }}
-    <script src="{{ site.url }}/vendor/jquery/dist/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="{{ site.url }}/vendor/uikit/js/uikit.js" type="text/javascript" charset="utf-8"></script>
-    <script src="{{ site.url }}/vendor/fontawesome/js/all.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ site.url }}/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="{{ site.url }}/vendor/uikit/js/uikit.js"></script>
+    <script src="{{ site.url }}/vendor/fontawesome/js/all.min.js"></script>
 </body>
 </html>

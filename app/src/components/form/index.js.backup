@@ -1,0 +1,153 @@
+import UIkit from 'uikit';
+import * as firebase from 'firebase/app';
+
+// Form
+class Form {
+    constructor(...props) {
+        this.email = props.find(email => email == 'email');
+        this.password = props.find(password => password == 'password');
+        this.checkbox = props.find(checkbox => checkbox == 'checkbox');
+        this.pathname = window.location.pathname;
+        this.uri = {login: null, register: null};
+        this.user = [];
+        return this;
+    }
+    
+    auth(url) {
+        
+    }
+    
+    createUser(email, password) {
+        firebase.auth().createUserWithEmailAndPassword(email, password).catch((error) => {
+            let errorCode = error.code,
+                errorMessage = error.message;
+                
+            UIkit.notification('<span uk-icon="icon: warning"></span>&nbsp;' + errorMessage, {
+                status: errorCode == 'auth/weak-password' ? 'danger' : 'success',
+                timeout: 3000
+            });
+            
+            console.log(error);
+        });
+    }
+    
+    data(u) {
+        return this.user.push(u);
+    }
+    
+    handleSubmit(e, options, btn) {
+        
+        let email, password, checkbox;
+        email = e[this.email].value;
+        password = e[this.password].value;
+        checkbox = e[this.checkbox];
+        
+        if (email == "") {
+            UIkit.notification(
+                '<span uk-icon="icon: mail;"></span>&nbsp;' + this.email + '&nbsp;' + options.messages.empty, {
+                status: options.status,
+                timeout: 3000
+            });
+        } else if (password == "") {
+            UIkit.notification(
+                '<span uk-icon="icon: lock;"></span>&nbsp;' + this.password + '&nbsp;' + options.messages.empty, {
+                status: options.status,
+                timeout: 3000
+            });
+        } else {
+            if (this.uri.login) {
+                this.signIn(email, password, btn);
+            } else if (this.uri.register) {
+                if (!checkbox) {
+                    UIkit.notification('<span uk-icon="icon: warning"></span>&nbsp;Please accept the terms and conditions, if you want to create a new account!', {
+                        status: 'warning',
+                        timeout: 3000
+                    });
+                } else {
+                    this.createUser(email, password);
+                }
+            } else {
+                //
+            }
+            
+            this.sendEmailVerification();
+        }
+        
+        setTimeout(() => {
+            btn.removeAttribute("disabled");
+            btn.innerHTML = this.uri.login ? 'Login' : 'Register';
+        }, 4500);
+    }
+    
+    signIn(email, password, btn) {
+        firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            UIkit.notification('<span uk-icon="icon: warning"></span>&nbsp;' + errorMessage, {
+                status: errorCode == 'auth/user-not-found' ? 'danger' : 'success',
+                timeout: 3000
+            });
+        });
+        
+        setTimeout(() => {
+            btn.removeAttribute("disabled");
+            btn.innerHTML = this.uri.login ? 'Login' : 'Register';
+        }, 4500);
+        //window.location = 'home.html';
+    }
+    
+    sendEmailVerification() {
+        firebase.auth().currentUser.sendEmailVerification()
+            .then(() => {
+                UIkit.notification('<span uk-icon="icon: check"></span>&nbsp;Email verification sent, please check your email.', 'success');
+            });
+    }
+    
+    validate(options) {
+        let uri = {
+            login: this.pathname.lastIndexOf("login.html") >= 1 ? true : false,
+            register: this.pathname.lastIndexOf("register.html") >= 1 ? true : false,
+            home: this.pathname.lastIndexOf("home.html") >= 1 ? true : false
+        }, form, btnForm;
+        
+        if (uri.home) {
+            return;
+        }
+        
+        firebase.auth().onAuthStateChanged((user) => {
+            
+            if (user) {
+                window.sessionStorage.setItem('user', user);
+                window.location = 'home.html';
+            } else {
+                if (uri.login) {
+                    form = document.querySelector("#form-login");
+                    btnForm = document.querySelector(".quick-btn-login");
+                    
+                    this.uri.login = uri.login;
+                    
+                    btnForm.addEventListener('click', (e) => {
+                        btnForm.setAttribute("disabled", true);
+                        btnForm.innerHTML = 'Please wait ...';
+                        form.onsubmit = this.handleSubmit(form, options, btnForm);
+                    });
+                } else if (uri.register) {
+                    form = document.querySelector("#form-register");
+                    btnForm = document.querySelector(".quick-btn-register");
+                    
+                    this.uri.register = uri.register;
+                    
+                    btnForm.addEventListener('click', () => {
+                        btnForm.setAttribute("disabled", true);
+                        btnForm.innerHTML = 'Please wait ...';
+                        Form.onsubmit = this.handleSubmit(form, options, btnForm);
+                    });
+                }
+                //window.location = (typeof user == 'object') ? 'home.html' : 'index.html';
+            }
+        });
+    }
+}
+
+export default Form;
