@@ -62,6 +62,6 @@ function handleRegister(e, b) {
     
     setTimeout(function() {
         b.removeAttribute("disabled");
-        b.innerHTML = "Login";
+        b.innerHTML = "Register";
     }, 4500);
 }
