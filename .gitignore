@@ -14,4 +14,5 @@ yarn-error.log
 #vendor
 #assets
 #app
+app/src/config/firebase/index.js
 app/src/config/firebase/index.js.bak
