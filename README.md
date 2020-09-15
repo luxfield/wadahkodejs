@@ -22,6 +22,7 @@ Good luck 🙂
 # 1.4 Catatan
 Ini masih dalam tahap pengembangan, silahkan kembangkan sendiri, tolong jangan hapus bagian footer untuk copyrightnya,
 Jika kalian ingin mengubah copyright sebaiknya formatnya seperti ini:
+
     © website.com source [wadahkode](https://github.com/wadahkode/appjs.git)
     
 Atau terserah kalian, yang penting sertakan sumbernya, terima kasih.
