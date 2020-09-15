@@ -1,21 +1,23 @@
 # appjs
 starter app with javascript and ruby
 
-# Syarat
+# 1.0 Syarat
     * jekyll
     * nodejs
     * webpack
     * firebase
     
-# Menjalankan dengan cepat
+# 1.2 Menjalankan dengan cepat
     $ npm run serve
     $ npm run start
 
-# Buat dan upload ke github pages
+# 1.3 Buat dan upload ke github pages
 Buka file .gitignore kemudian hapus tanda # pada baris docs,
 selanjutnya buka file _config.yml cari baris url hapus tanda # didepannya lalu masukan alamat atau url dari github pages kalian.
 
+Kemudian jalankan kembali langkah 1.2.
+
 Good luck 🙂
     
-# Catatan
+# 1.4 Catatan
 Ini masih dalam tahap pengembangan, silahkan kembangkan sendiri, tolong jangan hapus bagian footer, i love u.
