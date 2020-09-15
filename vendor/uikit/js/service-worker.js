@@ -105,7 +105,7 @@ define("./service-worker.js",['./workbox-0c7afc7d'], function (workbox) { 'use s
 
   workbox.precacheAndRoute([{
     "url": "uikit.js",
-    "revision": "ecfd5a0dbe81567d553799c00120f519"
+    "revision": "40d49cd729232f0afb6306cec64957ce"
   }], {});
 
 });

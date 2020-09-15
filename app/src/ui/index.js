@@ -1,7 +1,7 @@
 import UIkit from 'uikit';
 
-export const pushNotification = (message) => {
-    UIkit.notification(message);
+export const pushNotification = (message,options) => {
+    UIkit.notification(message, options);
 };
 
 
