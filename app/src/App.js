@@ -1,12 +1,11 @@
 import UIkit from 'uikit';
 import Icons from 'uikit/dist/js/uikit-icons';
 import {Extension} from './util/_extensions';
-import {isUndefined, isEmpty, isNull, isArray, isFunction} from 'lodash';
+import {isUndefined, isEmpty, isNull, isArray, isFunction, isObject} from 'lodash';
 import * as State from './util/_state';
 import * as Events from './components/event';
 import * as Route from './routes';
 import * as Form from './components/form';
-import './config/firebase';
 
 /**
  * Application
@@ -55,11 +54,22 @@ class App {
         if (isArray(o.action)) {
             o.action.forEach(action => {
                 if (!isNull(this.pathname.match(action + this.extensions))) {
-                    event.on(o.event, (e) => {
-                        let formId = id.find(element => element == "#form-" + action.slice(1)),
-                            btnForm = '.quick-btn-' + action.slice(1);
-                            
-                        Form[action.slice(1)](formId, e, btnForm);
+                    Form.authChecker(user => {
+                        if (user) {
+                            // const {email,emailVerified} = user;
+                            // if (!emailVerified) {
+                            //     Form.sendEmailVerification();
+                            // }
+                            setTimeout(function() {
+                                window.location.href = 'home';
+                            }, 1000);
+                        }
+                        event.on(o.event, (e) => {
+                            let formId = id.find(element => element == "#form-" + action.slice(1)),
+                                btnForm = '.quick-btn-' + action.slice(1);
+                                
+                            Form[action.slice(1)](formId, e, btnForm);
+                        });
                     });
                 }
             });
@@ -121,6 +131,15 @@ class App {
         this.formState(['#form-login','#form-register'], {
             event: 'click',
             action: ['/login', '/register']
+        });
+        Form.authChecker(user => {
+            if (user) {
+                if (isNull(this.pathname.match('home'))) {
+                    setTimeout(function() {
+                        window.location.href = 'home';
+                    }, 1000);
+                }
+            }
         });
     }
     

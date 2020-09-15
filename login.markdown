@@ -15,7 +15,7 @@ description: My Portofolio
             <div class="uk-margin">
                 <div class="uk-inline">
                     <span class="uk-form-icon" uk-icon="icon: mail;"></span>
-                    <input type="email" class="uk-input uk-form-width-large uk-form-medium" id="email" placeholder="Enter your email">
+                    <input type="email" class="uk-input uk-form-width-large uk-form-medium" id="email" placeholder="Enter your email" autocomplete="off">
                 </div>
             </div>
             <div class="uk-margin">
