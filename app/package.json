@@ -1,10 +1,26 @@
 {
   "name": "wadahkode",
-  "version": "v1.0.1",
+  "version": "v1.0.2",
   "description": "Library For AppJS",
   "main": "index.js",
   "repository": "https://github.com/wadahkode/appjs",
   "author": "wadahkode <mvp.dedefilaras@gmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "uikit": "^3.5.7"
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.14.0",
+    "firebase": "^7.20.0",
+    "webpack": "^4.44.1",
+    "workbox-webpack-plugin": "^5.1.4"
+  },
+  "scripts": {
+    "serve": "bundle exec jekyll serve",
+    "build": "bundle exec jekyll build",
+    "start": "webpack --watch",
+    "buildjs": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
