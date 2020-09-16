@@ -1,3 +1,5 @@
+![jsDelivr hits (npm)](https://img.shields.io/jsdelivr/npm/hm/wadahkode?style=for-the-badge)
+
 # appjs
 starter app with javascript and ruby
 
