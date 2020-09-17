@@ -22,25 +22,25 @@
                 <div class="uk-navbar-right">
                     <ul class="uk-navbar-nav">
                         <li class="uk-active">
-                            <a href="{{ site.url }}/login.html">
-                                Login
+                            <a href="{{ site.url }}/id/login.html">
+                                Masuk
                             </a>
                         </li>
                         <li>
                             <a href="{{ site.url }}/register.html">
-                                <span class="uk-badge uk-padding-small">Register</span>
+                                <span class="uk-badge uk-padding-small">Daftar</span>
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                <img width="20" src="{{ site.url }}/assets/lang/england.png"/>&nbsp;<span uk-icon="icon: chevron-down"></span>
+                                <img width="20" src="{{ site.url }}/assets/lang/indonesia.png"/>&nbsp;<span uk-icon="icon: chevron-down"></span>
                             </a>
                             <div class="uk-navbar-dropdown">
+                                <span class="uk-text-muted">Ganti bahasa</span>
+                                <hr/>
                                 <ul class="uk-nav uk-navbar-dropdown-nav">
-                                    <span class="uk-text-muted">Change language</span>
-                                    <hr/>
-                                    <li class="uk-active"><a href="{{ site.url }}">English</a></li>
-                                    <li><a href="{{ site.url }}/id">Indonesia</a></li>
+                                    <li class="uk-active"><a href="{{ site.url }}/id">Indonesia</a></li>
+                                    <li><a href="{{ site.url }}">English</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -50,8 +50,8 @@
         </div>
         <div class="uk-height-large uk-background-cover uk-light uk-flex" uk-parallax="bgx: 100; bgy: -300" style="background-image: url('{{ site.url }}/assets/images/illustration-business-people-avatar/43638.jpg')">
             <div class="uk-width-1-2@m @uk-text-center uk-margin-top uk-margin-auto-vertical uk-padding uk-padding-small">
-                <h1 class="">Welcome Friends</h1>
-                <p class="uk-text-lead">You're looking at my very simple portfolio.</p>
+                <h1 class="">Selamat datang teman-teman</h1>
+                <p class="uk-text-lead">Anda sedang melihat portofolio saya yang sangat sederhana.</p>
             </div>
         </div>
     </div>
@@ -60,9 +60,9 @@
             <!--button class="uk-offcanvas-close" type="button" uk-close></button-->
             <!--h3>General</h3-->
             <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
-                <li class="uk-active"><a href="#">General</a></li>
-                <li><a href="{{ site.url }}/index.html"><span class="uk-margin-small-right" uk-icon="icon: home"></span> Home</a></li>
-                <li><a href="{{ site.url }}/about.html"><span class="uk-margin-small-right" uk-icon="icon: info"></span> About me</a></li>
+                <li class="uk-active"><a href="#">Umum</a></li>
+                <li><a href="{{ site.url }}/id"><span class="uk-margin-small-right" uk-icon="icon: home"></span> Beranda</a></li>
+                <li><a href="{{ site.url }}/id/about.html"><span class="uk-margin-small-right" uk-icon="icon: info"></span> Tentang saya</a></li>
             </ul>
         </div>
     </div>

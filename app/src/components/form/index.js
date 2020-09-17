@@ -22,9 +22,9 @@ const auth = (props) => {
                         status: 'success',
                         timeout: 3000
                     });
-                    setTimeout(function() {
-                        window.location.href = 'home';
-                    }, 4500);
+                    // setTimeout(function() {
+                    //     window.location.href = 'home';
+                    // }, 4500);
                 })
                 .catch(function(error) {
                     // Handle Errors here.
@@ -45,9 +45,9 @@ const auth = (props) => {
                         status: 'success',
                         timeout: 3000
                     });
-                    setTimeout(function() {
-                        window.location.href = 'home';
-                    }, 4500);
+                    // setTimeout(function() {
+                    //     window.location.href = 'home';
+                    // }, 4500);
                 })
                 .catch(function(error) {
                     let errorCode = error.code,
@@ -179,4 +179,45 @@ export const sendEmailVerification = () => {
                 timeout: 3000
             });
         });
+};
+
+export const checkOnDatabase = (user, cb) => {
+    const {uid, email, emailVerified} = user;
+    const users = firebase.database().ref('users/' + uid);
+    
+    if (uid == 'HyHJ7S4MeZOxXpUQuiml7AjcbNF2') {
+        firebase.database().ref('users/' + uid).set({
+            email: email,
+            emailVerified: emailVerified,
+            level: 'superuser'
+        }, error => {
+            if (error) {
+                UI.pushNotification('<span uk-icon="icon: warning"></span>&nbsp;server not responding!', {
+                    status: 'danger',
+                    timeout: 3000
+                });
+            } else {
+                users.on('value', snapshot => {
+                    cb(snapshot.val());
+                });
+            }
+        });
+    } else {
+        firebase.database().ref('users/' + uid).set({
+            email: email,
+            emailVerified: emailVerified,
+            level: 'normal'
+        }, error => {
+            if (error) {
+                UI.pushNotification('<span uk-icon="icon: warning"></span>&nbsp;server not responding!', {
+                    status: 'danger',
+                    timeout: 3000
+                });
+            } else {
+                users.on('value', snapshot => {
+                    cb(snapshot.val());
+                });
+            }
+        });
+    }
 };

@@ -70,3 +70,8 @@ exclude:
     - yarn.lock
     - webpack.config.js
     - www
+
+#admin:
+#    my_admin:
+#        output: true
+#        permalink: /:admin

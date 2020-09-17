@@ -22,6 +22,7 @@ class App {
         this.get = undefined;
         this.post = undefined;
         this.pathname = window.location.pathname;
+        this.session = window.sessionStorage;
         this.extensions = Extension();
         UIkit.use(Icons);
     }
@@ -54,23 +55,24 @@ class App {
         if (isArray(o.action)) {
             o.action.forEach(action => {
                 if (!isNull(this.pathname.match(action + this.extensions))) {
-                    Form.authChecker(user => {
-                        if (user) {
-                            // const {email,emailVerified} = user;
-                            // if (!emailVerified) {
-                            //     Form.sendEmailVerification();
-                            // }
-                            setTimeout(function() {
-                                window.location.href = 'home';
-                            }, 1000);
-                        }
-                        event.on(o.event, (e) => {
-                            let formId = id.find(element => element == "#form-" + action.slice(1)),
-                                btnForm = '.quick-btn-' + action.slice(1);
+                    event.on(o.event, (e) => {
+                        let formId = id.find(element => element == "#form-" + action.slice(1)),
+                            btnForm = '.quick-btn-' + action.slice(1);
                                 
-                            Form[action.slice(1)](formId, e, btnForm);
-                        });
+                        Form[action.slice(1)](formId, e, btnForm);
                     });
+                    // Form.authChecker(user => {
+                    //     if (user) {
+                    //         // const {email,emailVerified} = user;
+                    //         // if (!emailVerified) {
+                    //         //     Form.sendEmailVerification();
+                    //         // }
+                    //         // setTimeout(function() {
+                    //         //     window.location.href = 'home';
+                    //         // }, 1000);
+                    //         Form.checkOnDatabase(user);
+                    //     }
+                    // });
                 }
             });
         }
@@ -128,17 +130,25 @@ class App {
     
     run() {
         this.navbarState('#homeNavbar', {event: 'scroll', scrollTo: 'top', max: 420});
-        this.formState(['#form-login','#form-register'], {
-            event: 'click',
-            action: ['/login', '/register']
-        });
+        
         Form.authChecker(user => {
             if (user) {
-                if (isNull(this.pathname.match('home'))) {
-                    setTimeout(function() {
-                        window.location.href = 'home';
-                    }, 1000);
-                }
+                Form.checkOnDatabase(user, response => {
+                    if (response.level == 'superuser') {
+                        setTimeout(function() {
+                            window.location.href = 'admin';
+                        }, 200);
+                    } else {
+                        setTimeout(function() {
+                            window.location.href = 'home';
+                        }, 200);
+                    }
+                });
+            } else {
+                this.formState(['#form-login','#form-register'], {
+                    event: 'click',
+                    action: ['/login', '/register']
+                });
             }
         });
     }
