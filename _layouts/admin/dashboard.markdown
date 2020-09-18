@@ -10,13 +10,29 @@
     <link rel="shortcut icon" href="{{ site.url }}/favicon.jpg" type="image/x-icon" />
     <style>
         #content {
-            margin-top: 5rem;
+            margin-top: -3.5rem;
         }
     </style>
 </head>
 <body>
+    {% include admin/navigation/index.markdown %}
+    
+    <div id="offcanvas-push" uk-offcanvas="mode: push; overlay: true">
+        <div class="uk-offcanvas-bar uk-background-default">
+            <!--button class="uk-offcanvas-close" type="button" uk-close></button-->
+            <!--h3>General</h3-->
+            <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
+                <li class="uk-active"><a href="#">General</a></li>
+                <li><a href="{{ site.url }}/index.html"><span class="uk-margin-small-right" uk-icon="icon: home"></span> Home</a></li>
+                <li><a href="{{ site.url }}/about.html"><span class="uk-margin-small-right" uk-icon="icon: info"></span> About me</a></li>
+            </ul>
+        </div>
+    </div>
+    
     <div id="content" class="uk-position-relative">
-        <div class="uk-container-small">{{ content }}</div>
+        <div class="uk-container">
+            {{ content }}
+        </div>
     </div>
     <script src="{{ site.url }}/vendor/jquery/dist/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="{{ site.url }}/vendor/uikit/js/uikit.js" type="text/javascript" charset="utf-8"></script>

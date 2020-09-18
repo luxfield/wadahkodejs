@@ -15,3 +15,4 @@ yarn-error.log
 #assets
 #app
 app/src/config/firebase/index.js
+www

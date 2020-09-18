@@ -171,14 +171,12 @@ function handleRegister(e, b) {
     }, 4500);
 }
 
-export const sendEmailVerification = () => {
-    return firebase.auth().currentUser.sendEmailVerification()
-        .then(function() {
-            UI.pushNotification("<span uk-icon=\"icon: check;\"></span>&nbsp;your email has not been verified, please check your email!", {
-                status: 'warning',
-                timeout: 3000
-            });
-        });
+export const sendEmailVerification = (cb) => {
+    return firebase.auth().currentUser.sendEmailVerification().then(() => cb(true));
+            // UI.pushNotification("<span uk-icon=\"icon: check;\"></span>&nbsp;your email has not been verified, please check your email!", {
+            //     status: 'warning',
+            //     timeout: 3000
+            // });
 };
 
 export const checkOnDatabase = (user, cb) => {

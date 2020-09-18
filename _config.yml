@@ -28,7 +28,7 @@ url: ""
 #twitter_username: jekyllrb
 github_username:  wadahkode
 source              : .
-destination         : ./docs
+destination         : ./www
 
 # Serving
 #detach              : false

@@ -1,7 +1,7 @@
 ---
-layout: dashboard
+layout: admin/dashboard
 title: Wadahkode
 description: Administrator
 ---
 
-<h1>Halo admin</h1>
+<h2>Dashboard</h2>

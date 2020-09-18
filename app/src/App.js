@@ -6,6 +6,7 @@ import * as State from './util/_state';
 import * as Events from './components/event';
 import * as Route from './routes';
 import * as Form from './components/form';
+import * as Dashboard from './components/admin';
 
 /**
  * Application
@@ -130,14 +131,25 @@ class App {
     
     run() {
         this.navbarState('#homeNavbar', {event: 'scroll', scrollTo: 'top', max: 420});
-        
         Form.authChecker(user => {
             if (user) {
+                //UIkit.alert('#email-verified').hide();
+                
                 Form.checkOnDatabase(user, response => {
                     if (response.level == 'superuser') {
-                        setTimeout(function() {
-                            window.location.href = 'admin';
-                        }, 200);
+                        if (isNull(this.pathname.match('admin'))) {
+                            setTimeout(function() {
+                                window.location = 'admin';
+                            }, 200);
+                            return false;
+                        }
+                        if (!response.emailVerified) {
+                            Form.sendEmailVerification(err => {
+                                return (err ? this.showNoticeEmailVerification() : false);
+                            });
+                        }
+                        
+                        return false;
                     } else {
                         setTimeout(function() {
                             window.location.href = 'home';
@@ -156,6 +168,19 @@ class App {
     routeState() {
         const { root, requestMethod } = this.routes;
         return Route.register(request => request.bind(root, requestMethod));
+    }
+    
+    showNoticeEmailVerification() {
+        const emailVerified = document.querySelector('#email-verified');
+        emailVerified.className = "uk-alert-warning uk-margin-bottom-small";
+        emailVerified.setAttribute("uk-alert", "");
+        emailVerified.style.marginTop = "-0.1rem";
+        emailVerified.innerHTML = `
+            <a class="uk-alert-close" uk-close></a>
+            <p>Email has not been verified, please check your email!</p>
+        `;
+        
+        return emailVerified;
     }
 }
 
