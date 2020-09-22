@@ -3,7 +3,7 @@
   "version": "1.0.8",
   "description": "Library For AppJS",
   "main": "index.js",
-  "repository": "https://github.com/wadahkode/appjs",
+  "repository": "https://github.com/wadahkode/wadahkodejs",
   "author": "wadahkode <mvp.dedefilaras@gmail.com>",
   "license": "MIT",
   "private": false,
