@@ -4,9 +4,10 @@ import {Extension} from './util/_extensions';
 import {isUndefined, isEmpty, isNull, isArray, isFunction, isObject} from 'lodash';
 import * as State from './util/_state';
 import * as Events from './components/event';
+import * as Request from './util/http';
 import * as Route from './routes';
 import * as Form from './components/form';
-import * as Dashboard from './components/admin';
+import Administrator from './components/admin';
 
 /**
  * Application
@@ -18,6 +19,7 @@ class App {
     // constructor
     constructor(props) {
         this.state = undefined;
+        this.request = null;
         this.routes = undefined;
         this.test = undefined;
         this.get = undefined;
@@ -62,21 +64,16 @@ class App {
                                 
                         Form[action.slice(1)](formId, e, btnForm);
                     });
-                    // Form.authChecker(user => {
-                    //     if (user) {
-                    //         // const {email,emailVerified} = user;
-                    //         // if (!emailVerified) {
-                    //         //     Form.sendEmailVerification();
-                    //         // }
-                    //         // setTimeout(function() {
-                    //         //     window.location.href = 'home';
-                    //         // }, 1000);
-                    //         Form.checkOnDatabase(user);
-                    //     }
-                    // });
                 }
             });
         }
+    }
+    
+    listen(callable) {
+        const { root, requestMethod } = this.routes;
+        Route.register(request => request.bind(root, requestMethod));
+        
+        return callable(Route);
     }
     
     navbarState(e,o) {
@@ -96,13 +93,53 @@ class App {
         }
     }
     
+    output() {
+        this.navbarState('#homeNavbar', {event: 'scroll', scrollTo: 'top', max: 420});
+        
+        Form.authChecker(user => {
+            if (user) {
+                Form.checkOnDatabase(user, response => {
+                    if (response.level == 'superuser') {
+                        if (isNull(this.pathname.match('admin'))) {
+                            setTimeout(function() {
+                                window.location.href = 'admin/index.html';
+                            }, 200);
+                            return false;
+                        }
+                        if (!response.emailVerified) {
+                            Form.sendEmailVerification(err => {
+                                return (err ? this.showNoticeEmailVerification() : false);
+                            });
+                        }
+                        // Dashboard.getElement('.firebase-email', element => {
+                        //     element.innerHTML = response.email;
+                        // });
+                        return new Administrator(user, this.state);
+                    } else {
+                        setTimeout(function() {
+                            window.location.href = 'home/index.html';
+                        }, 200);
+                    }
+                });
+            } else {
+                if (this.pathname.match('admin')) {
+                    window.location.href = '/login.html';
+                }
+            }
+        });
+        
+        this.formState(['#form-login','#form-register'], {
+            event: 'click',
+            action: ['/login', '/register']
+        });
+    }
+    
     register(modules={}) {
         if (isUndefined(modules) || isEmpty(modules)) {
             const app = document.getElementById('App');
             app.innerHTML = '<div class="uk-child-width-1-2@m uk-text-center"><h1>What happening!</h1><p>The system may be under repair or the system may have failed.</p></div>';
             app.className = "uk-height-large uk-flex uk-flex-middle uk-container";
         }
-        
         return (modules.hasOwnProperty('state') && modules.state === true) ? this.registerState(modules.collections) : false;
     }
     
@@ -125,49 +162,31 @@ class App {
                         
                         return ((event.type == 'SET_REQUEST_URI') ? {state, requestUri: event.uri} : state);
                     });
+                    
+                default:
+                    return this.register({});
             }
         });
     }
     
     run() {
-        this.navbarState('#homeNavbar', {event: 'scroll', scrollTo: 'top', max: 420});
-        Form.authChecker(user => {
-            if (user) {
-                //UIkit.alert('#email-verified').hide();
-                
-                Form.checkOnDatabase(user, response => {
-                    if (response.level == 'superuser') {
-                        if (isNull(this.pathname.match('admin'))) {
-                            setTimeout(function() {
-                                window.location = 'admin';
-                            }, 200);
-                            return false;
-                        }
-                        if (!response.emailVerified) {
-                            Form.sendEmailVerification(err => {
-                                return (err ? this.showNoticeEmailVerification() : false);
-                            });
-                        }
-                        
-                        return false;
-                    } else {
-                        setTimeout(function() {
-                            window.location.href = 'home';
-                        }, 200);
-                    }
-                });
-            } else {
-                this.formState(['#form-login','#form-register'], {
-                    event: 'click',
-                    action: ['/login', '/register']
-                });
-            }
+        let uri = this.routeState();
+        Route.get(uri, response => {
+            return ((response == 200) ? this.output() : this.routeNotFound());
         });
+    }
+    
+    routeNotFound() {
+        //alert(this.pathname.match('admin'));
     }
     
     routeState() {
         const { root, requestMethod } = this.routes;
-        return Route.register(request => request.bind(root, requestMethod));
+        return Route.register(request => {
+            request.bind(root, requestMethod);
+            //this.request = request;
+            return request.requestUri();
+        });
     }
     
     showNoticeEmailVerification() {
@@ -179,7 +198,6 @@ class App {
             <a class="uk-alert-close" uk-close></a>
             <p>Email has not been verified, please check your email!</p>
         `;
-        
         return emailVerified;
     }
 }

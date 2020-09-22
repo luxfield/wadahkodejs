@@ -16,3 +16,4 @@ yarn-error.log
 #app
 app/src/config/firebase/index.js
 www
+public

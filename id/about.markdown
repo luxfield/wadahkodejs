@@ -2,7 +2,6 @@
 layout: id/default
 title: Wadahkode
 description: Tentang saya
-permalink: /id/about.html
 ---
 
 <div class="uk-container">

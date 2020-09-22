@@ -2,7 +2,6 @@
 layout: id/home
 title: Wadahkode
 description: Portofolioku
-permalink: /id
 ---
 
 

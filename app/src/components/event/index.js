@@ -56,4 +56,3 @@ export const navbarFixedTop = (element, event, max) => {
  * @datetime 8 September 2020
  */
 export const navbarFixedBottom = (id, max) => {};
-

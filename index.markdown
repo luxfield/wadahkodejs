@@ -2,7 +2,6 @@
 layout: home
 title: Wadahkode
 description: My Portofolio
-permalink: /
 ---
 
 <!-- Component First -->

@@ -21,6 +21,7 @@
                             <ul class="uk-nav uk-navbar-dropdown-nav">
                                 <li class="uk-nav-header">Notification</li>
                                 <li class="uk-nav-divider"></li>
+                                <div id="notification">
                                 <li class="uk-card uk-background-default uk-border uk-margin-bottom">
                                     <div class="uk-card-header uk-padding-auto uk-margin-auto">
                                         <div class="uk-grid-small uk-flex-middle" uk-grid>
@@ -101,6 +102,7 @@
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
                                     </div-->
                                 </li>
+                                </div>
                             </ul>
                         </div>
                     </li>
@@ -115,9 +117,9 @@
                         </a>
                         <div class="uk-navbar-dropdown">
                             <ul class="uk-nav uk-navbar-dropdown-nav">
-                                <span class="uk-text-muted">wadahkode</span>
+                                <span class="firebase-email uk-text-muted">wadahkode</span>
                                 <hr/>
-                                <li class="uk-active">
+                                <li>
                                     <a href="{{ site.url }}">Edit profile</a>
                                 </li>
                                 <li>

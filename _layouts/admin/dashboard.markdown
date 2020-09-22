@@ -23,8 +23,30 @@
             <!--h3>General</h3-->
             <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
                 <li class="uk-active"><a href="#">General</a></li>
-                <li><a href="{{ site.url }}/index.html"><span class="uk-margin-small-right" uk-icon="icon: home"></span> Home</a></li>
-                <li><a href="{{ site.url }}/about.html"><span class="uk-margin-small-right" uk-icon="icon: info"></span> About me</a></li>
+                <li><a href="{{ site.url }}/admin/index.html"><span class="uk-margin-small-right" uk-icon="icon: home"></span> Dashboard</a></li>
+                <li class="uk-parent">
+                    <a href="#">
+                        <span class="uk-margin-small-right" uk-icon="icon: file-text"></span>&nbsp;Post
+                    </a>
+                    <ul class="uk-nav-sub">
+                        <li>
+                            <a href="{{ site.url }}/admin/posts/index.html">
+                                <span uk-icon="icon: hashtag"></span>&nbsp;All post
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ site.url }}/admin/posts/create.html">
+                                <span uk-icon="icon: pencil"></span>&nbsp;Create post
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ site.url }}/admin/posts/draft.html">
+                                <span uk-icon="icon: file"></span>&nbsp;Draft post
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="{{ site.url }}/admin/version.html"><span class="uk-margin-small-right" uk-icon="icon: info"></span> version 1.0.8</a></li>
             </ul>
         </div>
     </div>

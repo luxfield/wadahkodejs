@@ -1,9 +1,9 @@
 export const defaultRouteState = {
-    root: '/',
+    root: window.location.pathname,
     requestMethod: ['GET', 'POST']
 };
 export const defaultState = {
-	auth: {
+    auth: {
 	    id: [],
 	    event: {
 	        on: (e,o) => {
@@ -20,5 +20,25 @@ export const defaultState = {
             }
         }
     },
+    posts: {
+        create: {
+            id: [],
+            event: {
+                on: (e,o) => {
+                    return o(e);
+                },
+                action: []
+            },
+        },
+        view: {
+            id: [],
+            event: {
+                on: (e,o) => {
+                    return o(e);
+                },
+                action: []
+            },
+        },
+    }
     // add anymore state event
 };

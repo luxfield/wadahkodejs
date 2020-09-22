@@ -28,7 +28,7 @@ url: ""
 #twitter_username: jekyllrb
 github_username:  wadahkode
 source              : .
-destination         : ./www
+destination         : ./public
 
 # Serving
 #detach              : false
@@ -67,11 +67,23 @@ exclude:
     - database.rules.json
     - firebase.json
     - site.scss
+    - package.json
     - yarn.lock
+    - yarn-error.log
     - webpack.config.js
     - www
-
-#admin:
-#    my_admin:
-#        output: true
-#        permalink: /:admin
+    - README.md
+    
+# collections
+collections:
+    my_collection:
+        output: true
+        permalink: /:collection/:title:output_ext
+    
+    admin:
+        output: true
+        permalink: /:collection/:path/:name
+       
+    id:
+        output: true
+        permalink: /:collection/:path/:name
