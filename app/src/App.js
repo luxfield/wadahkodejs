@@ -19,7 +19,7 @@ class App {
     // constructor
     constructor(props) {
         this.state = undefined;
-        this.request = null;
+        this.request = {};
         this.routes = undefined;
         this.test = undefined;
         this.get = undefined;
@@ -199,6 +199,10 @@ class App {
             <p>Email has not been verified, please check your email!</p>
         `;
         return emailVerified;
+    }
+    
+    testFunc() {
+        alert('Welcome');
     }
 }
 

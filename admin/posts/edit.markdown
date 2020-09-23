@@ -4,11 +4,13 @@ title: Wadahkode
 description: Create
 ---
 
-<h3>Create post</h3>
+<h3>Edit post</h3>
 
 <div>
     <form id="form-edit" method="POST">
     <fieldset class="uk-fieldset">
+        <input type="hidden" id="postkey">
+        <input type="hidden" id="created_at">
         <!--legend class="uk-legend">Judul</legend-->
         <div class="uk-margin">
             <input class="uk-input" id="title" name="title" type="text" placeholder="judulnya apa?" autocomplete="off">

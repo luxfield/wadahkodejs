@@ -4,6 +4,19 @@ import * as Request from './util/http';
  * 
  * @author wadahkode
  */
+class Route {
+    constructor(uri, options) {
+        this.uri = uri;
+        this.options = options;
+    }
+    
+    get(uri, process) {
+        
+    }
+}
+
+export default Route;
+
 export const get = (url, callable) => {
     return Request.get(url).then(response => callable(response));
 };

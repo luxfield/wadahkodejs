@@ -10,7 +10,6 @@
     <link rel="shortcut icon" href="{{ site.url }}/favicon.jpg" type="image/x-icon" />
 </head>
 <body id="App">
-    <h1>Hello</h1>
     <script src="{{ site.url }}/vendor/jquery/dist/jquery.min.js"></script>
     <script src="{{ site.url }}/vendor/uikit/js/uikit.js"></script>
     <script src="{{ site.url }}/vendor/fontawesome/js/all.min.js"></script>

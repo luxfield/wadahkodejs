@@ -76,27 +76,53 @@ const posts = (props, callback) => {
     // };
     const date = new Date(),
     now = date.toLocaleString('en-US',{
-        hour12: true
+        hour12: false
     });
     //const posts = firebase.database().ref('posts/' + uid + '/' + url);
-    const postman = firebase.database().ref('posts/admin-posts/' + url);
-    
-    //const postMan = firebase.database().ref('posts/' + newPostKey);
+    const database = firebase.database();
+    const ref = database.ref('posts');
+    const postman = database.ref('posts').push();
+    const postEdit = database.ref('posts/' + key);
     
     switch (props.type) {
         case 'post.create':
-            alert(postman);
-            // return postMan.once('value').then(snapshot => {
-            //     return (isNull(snapshot.val()) ? createPost(postMan, {
-            //             title: title,
-            //             contents: contents,
-            //             url: hostname + url,
-            //             author: email,
-            //             created_at: now,
-            //             updated_at: now
-            //         }) : setTimeout(function() {callback(snapshot.val())},4600)
-            //     );
-            // });
+            ref.once('value', snapshot => {
+                if (isNull(snapshot.val())) {
+                    return createPost(postman, {
+                        "title": title,
+                        "contents": contents,
+                        "url": hostname + url,
+                        "author": email,
+                        "created_at": now,
+                        "updated_at": now
+                    });
+                } else {
+                    ref.once('child_added', snapshot => {
+                        return ((snapshot.val().title == title)
+                            ? setTimeout(function() {callback(snapshot.val())}, 4600)
+                            : createPost(postman,{
+                                "title": title,
+                                "contents": contents,
+                                "url": hostname + url,
+                                "author": email,
+                                "created_at": now,
+                                "updated_at": now
+                            })
+                        );
+                    });
+                }
+            });
+            break;
+            
+        case 'post.edit':
+            editPost(postEdit, {
+                "title": title,
+                "contents": contents,
+                "url": hostname + url,
+                "author": email,
+                "created_at": created_at,
+                "updated_at": now
+            });
             break;
             
         case 'create.post':
@@ -129,15 +155,14 @@ const posts = (props, callback) => {
         }, 4600);
     }
     
-    function editPost(posts, data, uid, key) {
+    function editPost(posts, data) {
         // Get a key for a new Post.
         //let newPostKey = firebase.database().ref().child('posts').push().key;
         // Write the new post's data simultaneously in the posts list and the user's post list.
-        let updates = {};
-        //updates['/posts/' + uid + '/' + key] = data;
-        updates['/posts/' + uid] = data;
-        
-        posts.update(updates);
+        // let updates = {};
+        // //updates['/posts/' + uid + '/' + key] = data;
+        // updates['/posts/' + uid] = data;
+        posts.update(data);
         setTimeout(function() {
             callback();
         }, 4600);
@@ -167,21 +192,17 @@ export const edit = (id,event,btn,user) => {
     let button = document.querySelector(btn),
         form = document.querySelector(id);
         
-    let href = window.location.href;
-    href = href.replace('-',' ');
+    let href = window.location.href,
+        postKey = href.replace('#ref=',' ').split(' ')[1];
+     
+    form.postkey.value = postKey;
     
-    const posts = firebase.database().ref('posts/' + user.uid);
+    const posts = firebase.database().ref('posts/' + postKey);
     posts.on('value', snapshot => {
-        const snap = Object.values(snapshot.val());
-        snap.forEach((item,key) => {
-            if (href.match(snap[key].title)) {
-                form.title.value = snap[key].title;
-                form.url.value = snap[key].title.replace(' ','-');
-                form.contents.value = snap[key].contents;
-                let created_at = snap[key].created_at,
-                    postKey = snap[key].title;
-            }
-        });
+        form.title.value = snapshot.val().title;
+        form.url.value = snapshot.val().title.replace(' ', '-');
+        form.contents.value = snapshot.val().contents;
+        form.created_at.value = snapshot.val().created_at;
     });
     
     form.title.addEventListener("keyup",function(){
@@ -192,11 +213,8 @@ export const edit = (id,event,btn,user) => {
     button.addEventListener(event, function(){
         this.setAttribute("disabled", true);
         this.innerHTML = "Please wait...";
-        if (window.location.pathname.match('posts/edit')) {
-            form.onsubmit = handleEditPost(form,button,user,{
-                postKey: postKey,
-                created_at: created_at
-            });
+        if (window.location.href.match(postKey)) {
+            form.onsubmit = handleEditPost(form,button,user);
         }
     });
 };
@@ -251,7 +269,9 @@ function handleCreatePost(e,b,u) {
                 title: title.value,
                 contents: contents.value,
                 hostname: hostname.value,
-                url: url.value
+                url: url.value,
+                created_at: null,
+                key: null
             },
             author: u
         }, res => {
@@ -273,10 +293,8 @@ function handleCreatePost(e,b,u) {
         b.innerHTML = "Kirim";
     }, 4500);
 }
-
-function handleEditPost(e,b,u,d) {
-    const {title, contents, hostname, url} = e;
-    
+function handleEditPost(e,b,u) {
+    const {title, contents, hostname, url, created_at, postkey} = e;
     if (isEmpty(title.value)) {
         UI.pushNotification('<span uk-icon="icon: warning;"></span>&nbsp;judul tidak boleh kosong!', {
             status: 'warning',
@@ -289,14 +307,14 @@ function handleEditPost(e,b,u,d) {
         });
     } else {
         posts({
-            type: 'create.edit',
+            type: 'post.edit',
             input: {
                 title: title.value,
                 contents: contents.value,
                 hostname: hostname.value,
                 url: url.value,
-                created_at: d.created_at,
-                key: d.postKey
+                created_at: created_at.value,
+                key: postkey.value
             },
             author: u
         }, res => {
@@ -315,8 +333,8 @@ function handleEditPost(e,b,u,d) {
     }
     setTimeout(function() {
         b.removeAttribute("disabled");
-        b.innerHTML = "Kirim";
-    }, 4500);
+        b.innerHTML = "Update";
+    }, 4600);
 }
 function handleCreatePages(e,b,u) {
     const {title, contents, hostname, url} = e;
@@ -466,43 +484,47 @@ export const postIndex = (element,data) => {
     const viewId = document.querySelector(element);
     let tableView = "";
     const {uid, email} = data;
-    const posts = firebase.database().ref('posts/' + uid);
+    const posts = firebase.database().ref('posts');
     posts.on('value', snapshot => {
         if (isNull(snapshot.val())) {
-            viewId.innerHTML = '<b>Saat ini tidak ada postingan!</b>';
+            viewId.innerHTML = '<tbody><td><b>Saat ini tidak ada postingan!</b></td></tbody>';
         } else {
+            const postKey = Object.keys(snapshot.val());
             const snap = Object.values(snapshot.val());
             
-            snap.forEach((item,key) => tableView += createTableView(snap,key));
+            snap.forEach((item,key) => tableView += createTableView(snap,key,postKey));
         }
-        viewId.innerHTML = `
-            <thead>
-                <th>#</th>
-                <th>judul</th>
-                <th>url</th>
-                <th>isi</th>
-                <th>dibuat pada</th>
-                <th>diupdate pada</th>
-                <th>penulis</th>
-                <th>action</th>
-            </thead>${tableView}
-        `;
+        
+        if (window.location.href.match('posts/index')) {
+            viewId.innerHTML = `
+                <thead>
+                    <th>#</th>
+                    <th>judul</th>
+                    <th>url</th>
+                    <th>isi</th>
+                    <th>dibuat pada</th>
+                    <th>diupdate pada</th>
+                    <th>penulis</th>
+                    <th>action</th>
+                </thead>${tableView}
+            `;
+        }
     });
     
-    function createTableView(item,key) {
+    function createTableView(item,key,postKey) {
         const {title,url,contents,created_at,updated_at,author} = item[key];
         let hashtag = key + 1;
         
         return `<tbody>
             <td>${hashtag}</td>
             <td>${title}</td>
-            <td>${url}</td>
+            <td><a href="${url}">${url}</a></td>
             <td>${contents}</td>
             <td>${created_at}</td>
             <td>${updated_at}</td>
             <td>${author}</td>
             <td>
-                <a href="edit.html#ref=${title.replace(' ', '-')}" uk-icon="icon: pencil"></a>
+                <a href="edit.html#ref=${postKey}" uk-icon="icon: pencil"></a>
                 <a href="#" uk-icon="icon: trash"></a>
             </td>
         </tbody>`
