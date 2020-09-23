@@ -39,6 +39,28 @@ export const defaultState = {
                 action: []
             },
         },
+    },
+    users: {
+        story: {
+            create: {
+                id: [],
+                event: {
+                    on: (e,o) => {
+                        return o(e);
+                    },
+                    action: []
+                }
+            },
+            view: {
+                id: [],
+                event: {
+                    on: (e,o) => {
+                        return o(e);
+                    },
+                    action: []
+                }
+            }
+        }
     }
     // add anymore state event
 };

@@ -7,6 +7,12 @@ import {firebaseConfig} from '../../config/firebase';
 
 firebase.initializeApp(firebaseConfig);
 
+const database = firebase.database();
+const date = new Date(),
+now = date.toLocaleString('en-US',{
+    hour12: false
+});
+
 const auth = (props) => {
     if (!isObject(props)) {
         return false;
@@ -17,11 +23,18 @@ const auth = (props) => {
         case 'login':
             return firebase.auth()
                 .signInWithEmailAndPassword(email, password)
-                .then(() => {
-                    UI.pushNotification("<span uk-icon=\"icon: check;\"></span>&nbsp;login is successful", {
-                        status: 'success',
-                        timeout: 3000
-                    });
+                .then((response) => {
+                    if (!response.user.emailVerified) {
+                        UI.pushNotification("<span uk-icon=\"icon: warning;\"></span>&nbsp;You cannot log in before verifying your email, please check your email.", {
+                            status: 'warning',
+                            timeout: 3000
+                        });
+                    } else {
+                        UI.pushNotification("<span uk-icon=\"icon: check;\"></span>&nbsp;login is successful", {
+                            status: 'success',
+                            timeout: 3000
+                        });
+                    }
                     // setTimeout(function() {
                     //     window.location.href = 'home';
                     // }, 4500);
@@ -41,9 +54,17 @@ const auth = (props) => {
             return firebase.auth()
                 .createUserWithEmailAndPassword(email, password)
                 .then(() => {
-                    UI.pushNotification('<span uk-icon="icon: check"></span>&nbsp;Registration is successful, please check your email to verify.', {
-                        status: 'success',
-                        timeout: 3000
+                    // UI.pushNotification('<span uk-icon="icon: check"></span>&nbsp;Registration is successful, please check your email to verify.', {
+                    //     status: 'success',
+                    //     timeout: 3000
+                    // });
+                    return sendEmailVerification(error => {
+                        if (error) {
+                            UI.pushNotification('<span uk-icon="check"></span>&nbsp;Registration is successful and email verification has been sent, please check your email.', {
+                                status: 'success',
+                                timeout: 3000
+                            });
+                        }
                     });
                     // setTimeout(function() {
                     //     window.location.href = 'home';
@@ -74,12 +95,11 @@ const posts = (props, callback) => {
     //     hour12: false,
     //     timezone: 'UTC'
     // };
-    const date = new Date(),
-    now = date.toLocaleString('en-US',{
-        hour12: false
-    });
+    // const date = new Date(),
+    // now = date.toLocaleString('en-US',{
+    //     hour12: false
+    // });
     //const posts = firebase.database().ref('posts/' + uid + '/' + url);
-    const database = firebase.database();
     const ref = database.ref('posts');
     const postman = database.ref('posts').push();
     const postEdit = database.ref('posts/' + key);
@@ -168,6 +188,52 @@ const posts = (props, callback) => {
         }, 4600);
     }
 };
+const postStory = (props, callback) => {
+    if (!isObject(props)) {
+        return false;
+    }
+    const {story,author} = props.input;
+    // database
+    const ref = database.ref('user-story'),
+        storypos = database.ref('user-story').push();
+    
+    switch (props.type) {
+        case 'story.create':
+            ref.once('value', snapshot => {
+                if (isNull(snapshot.val())) {
+                    return createStory(storypos, {
+                        "story": story,
+                        "author": author,
+                        "created_at": now,
+                        "updated_at": now
+                    });
+                } else {
+                    ref.once('child_added', snapshot => {
+                        return ((snapshot.val().story == story)
+                            ? setTimeout(function() {callback(snapshot.val())}, 4600)
+                            : createStory(storypos,{
+                                "story": story,
+                                "author": author,
+                                "created_at": now,
+                                "updated_at": now
+                            })
+                        );
+                    });
+                }
+            });
+            break;
+    }
+    
+    
+    function createStory(posts, data) {
+        posts.set(data);
+        setTimeout(function() {
+            callback();
+        }, 4600);
+    }
+};
+const postProduct = (props, callback) => {};
+
 export const authChecker = (cb) => {
     return firebase.auth().onAuthStateChanged(user => cb(user));
 };
@@ -233,6 +299,19 @@ export const login = (id, event, btn) => {
         form.onsubmit = handleLogin(form, button);
     });
 };
+export const logout = () => {
+    return firebase.auth().signOut().then(() => {
+        setTimeout(function() {
+            window.location.href = '../login.html';
+        }, 10);
+        
+    }).catch(error => {
+        UI.pushNotification('<span uk-icon="icon: warning;"></span>&nbsp;' + error.errorMessage, {
+            status: 'warning',
+            timeout: 3000
+        });
+    });
+};
 /**
  * For handler event click button register
  * 
@@ -246,6 +325,17 @@ export const register = (id, event, btn) => {
         this.setAttribute("disabled", true);
         this.innerHTML = "Please wait...";
         form.onsubmit = handleRegister(form, button);
+    });
+};
+
+export const story = (id, event, btn, data) => {
+    let button = document.querySelector(btn),
+        form = document.querySelector(id);
+    
+    button.addEventListener(event, function(){
+        this.setAttribute("disabled",true);
+        this.innerHTML = "Please wait...";
+        form.onsubmit = handleCreateStory(form,button,data);
     });
 };
 
@@ -378,7 +468,41 @@ function handleCreatePages(e,b,u) {
         b.innerHTML = "Kirim";
     }, 4500);
 }
-
+function handleCreateStory(e,b,u) {
+    const {story} = e;
+    
+    if (isEmpty(story.value)) {
+        UI.pushNotification("<span uk-icon=\"icon: mail;\"></span>&nbsp;story can't be empty!", {
+            status: 'warning',
+            timeout: 3000
+        });
+    } else {
+        postStory({
+            type: 'story.create',
+            input: {
+                "story": story.value,
+                "author": u.email
+            }
+        }, res => {
+            if (isObject(res)) {
+                UI.pushNotification('<span uk-icon="icon: warning"></span>&nbsp;cerita sudah ada!',{
+                    status: 'warning',
+                    timeout: 3000
+                });
+            } else {
+                UI.pushNotification('<span uk-icon="icon: check"></span>&nbsp;cerita berhasil dikirim!',{
+                    status: 'success',
+                    timeout: 3000
+                });
+            }
+        });
+    }
+    setTimeout(function() {
+        b.removeAttribute('disabled');
+        story.value = '';
+        b.innerHTML = 'Kirim';
+    }, 4600);
+}
 /**
  * Handle login
  * 
@@ -451,7 +575,7 @@ function handleRegister(e, b) {
         b.innerHTML = "Register";
     }, 4500);
 }
-export const sendEmailVerification = (cb) => {
+const sendEmailVerification = (cb) => {
     return firebase.auth().currentUser.sendEmailVerification().then(() => cb(true));
             // UI.pushNotification("<span uk-icon=\"icon: check;\"></span>&nbsp;your email has not been verified, please check your email!", {
             //     status: 'warning',
@@ -529,4 +653,63 @@ export const postIndex = (element,data) => {
             </td>
         </tbody>`
     }
+};
+export const storyIndex = (element,data) => {
+    const viewId = document.querySelector(element);
+    let storyView = "";
+    const {uid, email} = data;
+    const story = database.ref('user-story');
+    story.on('value', snapshot => {
+        if (isNull(snapshot.val())) {
+            if (window.location.href.match('home/index')) {
+                setTimeout(function() {
+                    viewId.innerHTML = `
+                        <div class="uk-container uk-background-default uk-margin-top uk-margin-bottom uk-box-shadow-small">
+                            <div class="uk-card">
+                                <div class="uk-card-body uk-padding-remove-vertical uk-padding-remove-horizontal">
+                                    <b>Tidak ada cerita yang dibagikan!</b>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }, 5000);
+            }
+            return false;
+        } else {
+            const storyKey = Object.keys(snapshot.val());
+            const snap = Object.values(snapshot.val());
+            
+            snap.forEach((item,key) => storyView += createStoryView(snap,key,storyKey[key]));
+        }
+        
+        if (window.location.href.match('home/index')) {
+            setTimeout(function() {
+                viewId.innerHTML = `
+                    ${storyView}
+                `;
+            }, 5000);
+        }
+    });
+    
+    function createStoryView(item,key,postKey) {
+        const {story,created_at,updated_at,author} = item[key];
+        //let hashtag = key + 1;
+        
+        return `
+            <div class="uk-container uk-background-default uk-margin-top uk-margin-bottom uk-box-shadow-small">
+                <div class="uk-card">
+                    <div class="uk-card-body uk-padding-remove-vertical uk-padding-remove-horizontal">
+                        <h4 class="uk-card-title">${author}</h4>
+                        <p>${story}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+};
+export const updateEmailVerification = (uid,verified) => {
+    const users = firebase.database().ref('users/' + uid);
+    users.update({
+        "emailVerified": verified
+    });
 };

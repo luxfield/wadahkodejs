@@ -2,12 +2,12 @@ import {isNull,isArray,isEmpty} from 'lodash';
 import {Extension} from '../../util/_extensions';
 import * as Form from '../form';
 /**
- * Administrator CRUD
+ * Homepage CRUD
  * 
  * @author wadahkode
  * @since version 1.0.8
  */
-class Administrator {
+class Homepage {
     constructor(data, state) {
         this.data = data;
         this.extensions = Extension();
@@ -16,14 +16,14 @@ class Administrator {
         this.render();
     }
     
-    formState(e=[], o={}) {
-        const {id, event} = this.state.posts.create;
+    formCreateStoryState(e=[], o={}) {
+        const {id, event} = this.state.users.story.create;
         if (isArray(id) && !isEmpty(e)) {
             e.forEach(item => id.push(item));
         }
         if (isArray(o.action)) {
             o.action.forEach(action => {
-                if (!isNull(this.pathname.match(action + this.extensions))) {
+                if (!isNull(this.pathname.match('home/index' + this.extensions))) {
                     event.on(o.event, (e) => {
                         let formId = id.find(element => element == "#form-" + action.slice(1)),
                             btnForm = '.quick-btn-' + action.slice(1);
@@ -44,34 +44,33 @@ class Administrator {
     }
     
     render() {
-        this.formState(['#form-create', '#form-edit'], {
+        this.formCreateStoryState(['#form-story'], {
             event: 'click',
-            action: ['/create', '/edit']
+            action: ['/story']
         });
-        this.viewState(['#view-post'], {
+        this.viewStoryState(['#view-story'], {
             action: ['/index']
         });
         this.logout();
-        
     }
     
-    viewState(e=[], o={}) {
-        const {id, event} = this.state.posts.view;
+    viewStoryState(e=[], o={}) {
+        const {id, event} = this.state.users.story.view;
         if (isArray(id) && !isEmpty(e)) {
             e.forEach(item => id.push(item));
         }
         if (isArray(o.action)) {
             o.action.forEach(action => {
-                if (!isNull(this.pathname.match(action + this.extensions))) {
-                    let viewId = id.find(element => element == '#view-post');
-                    Form['post' + action.slice(1).charAt(0).toUpperCase() + action.slice(2)](viewId, this.data);
+                if (!isNull(this.pathname.match('home/index' + this.extensions))) {
+                    let viewId = id.find(element => element == '#view-story');
+                    Form['story' + action.slice(1).charAt(0).toUpperCase() + action.slice(2)](viewId, this.data);
                 }
             });
         }
     }
     
     logout() {
-        if (this.pathname.match('admin/logout')) {
+        if (this.pathname.match('home/logout')) {
             return Form.logout();
         }
     }
@@ -81,4 +80,4 @@ const createElement = (element, attributes, values) => {
     
 };
 
-export default Administrator;
+export default Homepage;

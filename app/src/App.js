@@ -8,6 +8,7 @@ import * as Request from './util/http';
 import * as Route from './routes';
 import * as Form from './components/form';
 import Administrator from './components/admin';
+import Homepage from './components/users';
 
 /**
  * Application
@@ -99,31 +100,37 @@ class App {
         Form.authChecker(user => {
             if (user) {
                 Form.checkOnDatabase(user, response => {
-                    if (response.level == 'superuser') {
-                        if (isNull(this.pathname.match('admin'))) {
-                            setTimeout(function() {
-                                window.location.href = 'admin/index.html';
-                            }, 200);
-                            return false;
-                        }
-                        if (!response.emailVerified) {
-                            Form.sendEmailVerification(err => {
-                                return (err ? this.showNoticeEmailVerification() : false);
-                            });
-                        }
-                        // Dashboard.getElement('.firebase-email', element => {
-                        //     element.innerHTML = response.email;
+                    if (!user.emailVerified) {
+                        return this.showNoticeEmailVerification();
+                        // return Form.sendEmailVerification(err => {
+                        //     return (err ? this.showNoticeEmailVerification() : false);
                         // });
-                        return new Administrator(user, this.state);
                     } else {
-                        setTimeout(function() {
-                            window.location.href = 'home/index.html';
-                        }, 200);
+                        Form.updateEmailVerification(user.uid, user.emailVerified);
+                        if (response.level == 'superuser') {
+                            if (isNull(this.pathname.match('admin'))) {
+                                setTimeout(function() {
+                                    window.location.href = 'admin/index.html';
+                                }, 200);
+                                return false;
+                            }
+                            return new Administrator(user, this.state);
+                        } else {
+                            if (isNull(this.pathname.match('home'))) {
+                                setTimeout(function() {
+                                    window.location.href = 'home/index.html';
+                                }, 200);
+                                return false;
+                            }
+                            return new Homepage(user, this.state);
+                        }
                     }
                 });
             } else {
                 if (this.pathname.match('admin')) {
-                    window.location.href = '/login.html';
+                    window.location.href = '../login.html';
+                } else if (this.pathname.match('home')) {
+                    window.location.href = '../login.html';
                 }
             }
         });

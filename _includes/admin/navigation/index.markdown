@@ -120,13 +120,13 @@
                                 <span class="firebase-email uk-text-muted">wadahkode</span>
                                 <hr/>
                                 <li>
-                                    <a href="{{ site.url }}">Edit profile</a>
+                                    <a href="{{ site.url }}/admin/profile">Edit profile</a>
                                 </li>
                                 <li>
-                                    <a href="{{ site.url }}/id">Settings</a>
+                                    <a href="{{ site.url }}/admin/settings">Settings</a>
                                 </li>
                                 <li>
-                                    <a href="{{ site.url }}/logout">Logout</a>
+                                    <a href="{{ site.url }}/admin/logout">Logout</a>
                                 </li>
                             </ul>
                         </div>
