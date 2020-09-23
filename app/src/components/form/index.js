@@ -492,7 +492,7 @@ export const postIndex = (element,data) => {
             const postKey = Object.keys(snapshot.val());
             const snap = Object.values(snapshot.val());
             
-            snap.forEach((item,key) => tableView += createTableView(snap,key,postKey));
+            snap.forEach((item,key) => tableView += createTableView(snap,key,postKey[key]));
         }
         
         if (window.location.href.match('posts/index')) {
